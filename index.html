@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="JustTypeWeb — a simple text-first social platform built by Janardhan K S."
+    >
+
+    <meta name="theme-color" content="#070707">
+
+    <title>JustTypeWeb — Just Type.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         TOP NAVIGATION
+    ========================== -->
+
+    <header class="topbar">
+
+        <a href="#" class="logo">
+            <span class="logo-mark">J</span>
+            <span>JustTypeWeb</span>
+        </a>
+
+        <nav class="desktop-nav">
+
+            <a href="#" class="nav-item active">
+                Home
+            </a>
+
+            <a href="#explore" class="nav-item">
+                Explore
+            </a>
+
+            <a href="#notifications" class="nav-item">
+                Notifications
+            </a>
+
+            <a href="#about" class="nav-item">
+                About
+            </a>
+
+        </nav>
+
+        <div class="nav-right">
+
+            <button class="search-button" id="searchButton">
+                <span>⌕</span>
+                <span class="search-text">Search</span>
+            </button>
+
+            <button class="login-button">
+                Log in
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN LAYOUT
+    ========================== -->
+
+    <main class="main-layout">
+
+        <!-- LEFT SIDEBAR -->
+
+        <aside class="sidebar left-sidebar">
+
+            <a class="side-link active" href="#">
+                <span>⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a class="side-link" href="#explore">
+                <span>⌕</span>
+                <span>Explore</span>
+            </a>
+
+            <a class="side-link" href="#notifications">
+                <span>♡</span>
+                <span>Notifications</span>
+                <span class="notification-dot"></span>
+            </a>
+
+            <a class="side-link" href="#profile">
+                <span>◉</span>
+                <span>Profile</span>
+            </a>
+
+            <a class="side-link" href="#about">
+                <span>ⓘ</span>
+                <span>About</span>
+            </a>
+
+            <button class="compose-side-button" id="openComposer">
+                + Write
+            </button>
+
+        </aside>
+
+
+        <!-- =========================
+             FEED
+        ========================== -->
+
+        <section class="feed">
+
+            <div class="feed-header">
+
+                <div>
+                    <p class="eyebrow">JUSTTYPEWEB</p>
+
+                    <h1>Your feed.</h1>
+                </div>
+
+                <button class="feed-filter">
+                    Latest ▾
+                </button>
+
+            </div>
+
+
+            <!-- COMPOSER -->
+
+            <section class="composer">
+
+                <div class="avatar">
+                    J
+                </div>
+
+                <div class="composer-content">
+
+                    <textarea
+                        id="postInput"
+                        maxlength="500"
+                        placeholder="What's on your mind?"
+                    ></textarea>
+
+                    <div class="composer-bottom">
+
+                        <span id="characterCount">
+                            0 / 500
+                        </span>
+
+                        <button id="postButton">
+                            Post
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- POSTS -->
+
+            <div id="posts">
+
+                <!-- POST 1 -->
+
+                <article class="post">
+
+                    <div class="post-avatar">
+                        J
+                    </div>
+
+                    <div class="post-content">
+
+                        <div class="post-header">
+
+                            <div>
+                                <strong>
+                                    Janardhan K S
+                                </strong>
+
+                                <span class="username">
+                                    @janardhan#0001
+                                </span>
+
+                                <span class="post-time">
+                                    · 2h
+                                </span>
+                            </div>
+
+                            <button class="more-button">
+                                •••
+                            </button>
+
+                        </div>
+
+                        <p class="post-text">
+                            Building something new today.
+                            JustTypeWeb is getting a complete
+                            redesign. 🚀
+                        </p>
+
+                        <div class="post-actions">
+
+                            <button class="post-action like-button">
+                                <span>♡</span>
+                                <span>12</span>
+                            </button>
+
+                            <button class="post-action">
+                                <span>◯</span>
+                                <span>4</span>
+                            </button>
+
+                            <button class="post-action">
+                                <span>↗</span>
+                                <span>Share</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- POST 2 -->
+
+                <article class="post">
+
+                    <div class="post-avatar user-avatar">
+                        G
+                    </div>
+
+                    <div class="post-content">
+
+                        <div class="post-header">
+
+                            <div>
+
+                                <strong>
+                                    Guest User
+                                </strong>
+
+                                <span class="username">
+                                    @guest#0002
+                                </span>
+
+                                <span class="post-time">
+                                    · 5h
+                                </span>
+
+                            </div>
+
+                            <button class="more-button">
+                                •••
+                            </button>
+
+                        </div>
+
+                        <p class="post-text">
+                            Simple ideas can become great
+                            products when you keep building.
+                        </p>
+
+                        <div class="post-actions">
+
+                            <button class="post-action like-button">
+                                <span>♡</span>
+                                <span>8</span>
+                            </button>
+
+                            <button class="post-action">
+                                <span>◯</span>
+                                <span>2</span>
+                            </button>
+
+                            <button class="post-action">
+                                <span>↗</span>
+                                <span>Share</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDEBAR -->
+
+        <aside class="sidebar right-sidebar">
+
+            <div class="side-card">
+
+                <p class="eyebrow">
+                    TRENDING
+                </p>
+
+                <h3>
+                    What's happening
+                </h3>
+
+                <div class="trend">
+                    <span>01</span>
+                    <div>
+                        <strong>Web Development</strong>
+                        <small>1.2K posts</small>
+                    </div>
+                </div>
+
+                <div class="trend">
+                    <span>02</span>
+                    <div>
+                        <strong>AI</strong>
+                        <small>980 posts</small>
+                    </div>
+                </div>
+
+                <div class="trend">
+                    <span>03</span>
+                    <div>
+                        <strong>JavaScript</strong>
+                        <small>740 posts</small>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="side-card creator-card">
+
+                <p class="eyebrow">
+                    BUILT BY
+                </p>
+
+                <h3>
+                    Janardhan K S
+                </h3>
+
+                <p>
+                    Developer, builder and creator
+                    behind JustTypeWeb.
+                </p>
+
+                <a
+                    href="https://janardhanks.github.io/janardhan-builds/"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Janardhan Builds ↗
+                </a>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- =========================
+         MOBILE NAVIGATION
+    ========================== -->
+
+    <nav class="mobile-nav">
+
+        <a href="#" class="mobile-nav-item active">
+            <span>⌂</span>
+            <small>Home</small>
+        </a>
+
+        <a href="#explore" class="mobile-nav-item">
+            <span>⌕</span>
+            <small>Explore</small>
+        </a>
+
+        <button
+            class="mobile-compose"
+            id="mobileCompose"
+        >
+            +
+        </button>
+
+        <a href="#notifications" class="mobile-nav-item">
+            <span>♡</span>
+            <small>Alerts</small>
+        </a>
+
+        <a href="#profile" class="mobile-nav-item">
+            <span>◉</span>
+            <small>Profile</small>
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         COMPOSER MODAL
+    ========================== -->
+
+    <div
+        class="modal"
+        id="composerModal"
+    >
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>Write something</h2>
+
+                <button id="closeComposer">
+                    ×
+                </button>
+
+            </div>
+
+            <textarea
+                id="modalPostInput"
+                maxlength="500"
+                placeholder="What's on your mind?"
+            ></textarea>
+
+            <div class="modal-footer">
+
+                <span>
+                    500 characters maximum
+                </span>
+
+                <button id="modalPostButton">
+                    Post
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
