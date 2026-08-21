@@ -1,7 +1,6 @@
 import { initializeApp } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -9,32 +8,26 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-
 import {
     getFirestore,
     doc,
     setDoc,
-    serverTimestamp,
-    runTransaction
+    getDoc,
+    runTransaction,
+    serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 
 import {
     firebaseConfig
 } from "./firebase-config.js";
 
 
-const app =
-    initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
+const auth = getAuth(app);
 
-const auth =
-    getAuth(app);
-
-
-const db =
-    getFirestore(app);
+const db = getFirestore(app);
 
 
 const form =
@@ -53,13 +46,11 @@ form.addEventListener(
 
         event.preventDefault();
 
-
         const displayName =
             document
                 .getElementById("displayName")
                 .value
                 .trim();
-
 
         const username =
             document
@@ -68,13 +59,11 @@ form.addEventListener(
                 .trim()
                 .toLowerCase();
 
-
         const email =
             document
                 .getElementById("email")
                 .value
                 .trim();
-
 
         const password =
             document
@@ -93,7 +82,45 @@ form.addEventListener(
         try {
 
             /*
-             * Create Firebase Auth account
+             * Validate username
+             */
+
+            if (!/^[a-z0-9_]+$/.test(username)) {
+
+                throw new Error(
+                    "USERNAME_INVALID"
+                );
+
+            }
+
+
+            /*
+             * Check username before creating account
+             */
+
+            const usernameRef =
+                doc(
+                    db,
+                    "usernames",
+                    username
+                );
+
+
+            const usernameSnapshot =
+                await getDoc(usernameRef);
+
+
+            if (usernameSnapshot.exists()) {
+
+                throw new Error(
+                    "USERNAME_EXISTS"
+                );
+
+            }
+
+
+            /*
+             * Create Firebase Authentication account
              */
 
             const credential =
@@ -109,14 +136,10 @@ form.addEventListener(
 
 
             /*
-             * Generate JustTypeWeb number
-             *
-             * 1 → 0001
-             * 2 → 0002
-             * etc.
+             * Generate user number
              */
 
-            const counterReference =
+            const counterRef =
                 doc(
                     db,
                     "system",
@@ -124,25 +147,28 @@ form.addEventListener(
                 );
 
 
-            const number =
+            const userNumber =
                 await runTransaction(
                     db,
-                    async transaction => {
+                    async (transaction) => {
 
-                        const snapshot =
+                        const counterSnapshot =
                             await transaction.get(
-                                counterReference
+                                counterRef
                             );
 
 
                         let nextNumber = 1;
 
 
-                        if (snapshot.exists()) {
+                        if (
+                            counterSnapshot.exists()
+                        ) {
 
                             nextNumber =
                                 (
-                                    snapshot.data()
+                                    counterSnapshot
+                                        .data()
                                         .value || 0
                                 ) + 1;
 
@@ -150,7 +176,7 @@ form.addEventListener(
 
 
                         transaction.set(
-                            counterReference,
+                            counterRef,
                             {
                                 value: nextNumber
                             }
@@ -164,7 +190,7 @@ form.addEventListener(
 
 
             const tag =
-                String(number)
+                String(userNumber)
                     .padStart(4, "0");
 
 
@@ -173,14 +199,35 @@ form.addEventListener(
 
 
             /*
-             * Save public profile
+             * Save username reservation
              */
 
             await setDoc(
-                doc(db, "users", user.uid),
+                usernameRef,
+                {
+                    uid: user.uid,
+                    username: username,
+                    tag: tag,
+                    createdAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            /*
+             * Save user profile
+             */
+
+            await setDoc(
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                ),
                 {
 
-                    uid: user.uid,
+                    uid:
+                        user.uid,
 
                     displayName:
                         displayName,
@@ -211,7 +258,7 @@ form.addEventListener(
 
 
             /*
-             * Update Firebase profile
+             * Update Firebase Auth profile
              */
 
             await updateProfile(
@@ -224,7 +271,7 @@ form.addEventListener(
 
 
             /*
-             * Successful signup
+             * Success
              */
 
             window.location.href =
@@ -234,16 +281,39 @@ form.addEventListener(
 
         catch (error) {
 
-            console.error(error);
+            console.error(
+                "JUSTTYPEWEB SIGNUP ERROR:",
+                error
+            );
 
 
             if (
+                error.message ===
+                "USERNAME_EXISTS"
+            ) {
+
+                message.textContent =
+                    "That username is already taken.";
+
+            }
+
+            else if (
+                error.message ===
+                "USERNAME_INVALID"
+            ) {
+
+                message.textContent =
+                    "Username can only contain letters, numbers and underscore.";
+
+            }
+
+            else if (
                 error.code ===
                 "auth/email-already-in-use"
             ) {
 
                 message.textContent =
-                    "This email already has an account.";
+                    "This email already has an account. Try logging in.";
 
             }
 
@@ -253,14 +323,24 @@ form.addEventListener(
             ) {
 
                 message.textContent =
-                    "Please choose a stronger password.";
+                    "Password must be at least 6 characters.";
+
+            }
+
+            else if (
+                error.code ===
+                "permission-denied"
+            ) {
+
+                message.textContent =
+                    "Firestore permission denied. Check your Firestore rules.";
 
             }
 
             else {
 
                 message.textContent =
-                    "Account creation failed. Please try again.";
+                    `Error: ${error.message}`;
 
             }
 
