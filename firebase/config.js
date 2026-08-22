@@ -1,7 +1,4 @@
-// Firebase configuration
-// Replace the values below with the Web App configuration
-// Your web app's Firebase configuration
- export const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyBteHGFKdVxKTpUcVpKAYX931jR9sVKYrU",
   authDomain: "justtypeweb-5d2aa.firebaseapp.com",
   projectId: "justtypeweb-5d2aa",
